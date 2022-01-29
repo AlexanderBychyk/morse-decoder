@@ -38,9 +38,18 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let digitArray = expr.split('').reduce((a, e, i)=> a + e + (i % 10 === 9 ? ' ' : ''), '').split(' ').filter(n => n);
+    let morseArray = [];
+    let str = '';
+    digitArray.forEach((element, index) => {
+        let digit = element.split('').reduce((a, e, i)=> a + e + (i % 2 === 1 ? ' ' : ''), '').split(' ').filter(n => +n > 0);
+        morseArray[index] = digit.map(value => value == '10' ? '.' : '-')
+    });
+    morseArray.map(element => {
+        str += element.length == 0 ? ' ' : MORSE_TABLE[element.join('')];
+    })
+    return str
 }
-
 module.exports = {
     decode
 }
